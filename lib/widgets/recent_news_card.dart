@@ -20,18 +20,18 @@ class _RecentNewsCardState extends State<RecentNewsCard> {
     final String title = widget.category["title"];
     final String subTitle = widget.category["subTitle"];
     final String imageUrl = widget.category["imageUrl"];
-    final String category = widget.category["category"];
+    final String category = widget.category["categoryName"];
     return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: 13,
-        horizontal: 10,
+      padding: EdgeInsets.symmetric(
+        // vertical: 13.w,
+        horizontal: 10.h,
       ),
       width: double.infinity,
-      decoration: const BoxDecoration(
-        border: Border.symmetric(
-          horizontal: BorderSide(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
             color: Colors.black26,
-            width: 2,
+            width: 2.h,
           ),
         ),
       ),
@@ -39,6 +39,7 @@ class _RecentNewsCardState extends State<RecentNewsCard> {
         children: [
           //! news section
           RichText(
+            maxLines: 5,
             text: TextSpan(
               style: TextStyle(
                 fontSize: 24.sp,
@@ -48,12 +49,14 @@ class _RecentNewsCardState extends State<RecentNewsCard> {
                   text: "$title : ",
                   style: const TextStyle(
                     color: Colors.blue,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 TextSpan(
                   text: subTitle,
                   style: const TextStyle(
                     color: Colors.black,
+                    fontWeight: FontWeight.w500,
                   ),
                 )
               ],
@@ -62,49 +65,36 @@ class _RecentNewsCardState extends State<RecentNewsCard> {
           const SizedBox(
             height: 15,
           ),
-          Image.network(
-            imageUrl,
+          SizedBox(
             width: double.infinity,
-            fit: BoxFit.cover,
+            height: 240.w,
+            child: Stack(
+              children: [
+                Container(
+                  color: Colors.grey[200],
+                ),
+                Image.network(
+                  imageUrl,
+                  height: 240.w,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      color: Colors.grey[200],
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-          CardUtilBottom(categoryName: category)
+          CardUtilBottom(
+            categoryName: category,
+            categoryId: "",
+            newsId: widget.category["id"],
+          )
         ],
       ),
     );
   }
 }
-// import 'package:flutter/material.dart';
-
-// class RecentNewsCard extends StatefulWidget {
-//   const RecentNewsCard(
-//       {super.key,
-//       required this.title,
-//       required this.id,
-//       required this.imageUrl,
-//       required this.categoryName});
-//   final String title;
-//   final String id;
-//   final String imageUrl;
-//   final String categoryName;
-
-//   @override
-//   State<RecentNewsCard> createState() => _RecentNewsCardState();
-// }
-
-// class _RecentNewsCardState extends State<RecentNewsCard> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: double.infinity,
-//       color: Colors.black,
-//       child: Column(
-//         children: [
-//           //! news section
-//           Row(
-//             children: [],
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }

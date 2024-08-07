@@ -2,87 +2,126 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yug_abhiyan_times_client/core/routes.dart';
 import 'package:yug_abhiyan_times_client/data/data.dart';
+import 'package:yug_abhiyan_times_client/screens/home_page/widgets/category_list.dart';
+import 'package:yug_abhiyan_times_client/screens/home_page/widgets/profile_drawer.dart';
 import 'package:yug_abhiyan_times_client/screens/notifications_page/notifications_page.dart';
 import 'package:yug_abhiyan_times_client/screens/profile_page/profile_page.dart';
+import 'package:yug_abhiyan_times_client/widgets/news_card.dart';
 import 'package:yug_abhiyan_times_client/widgets/recent_news_card.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+  HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => HomePageState();
-}
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
-class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size);
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {
-                Routes.instance.push(const NotificationsPage(), context);
-              },
-              icon: const Icon(
-                Icons.notifications_outlined,
-                size: 24,
-              )),
-          IconButton(
-              onPressed: () {
-                Routes.instance.push(const ProfilePage(), context);
-              },
-              icon: const Icon(
-                Icons.account_circle_outlined,
-                size: 24,
-              )),
-        ],
-        title: const Text("Yug Abhiyan Times"),
-      ),
-      body: SizedBox(
-        width: double.infinity,
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Row(
-                  children: Data.instance.categories
-                      .map(
-                        (e) => Container(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              right: BorderSide(
-                                color: Colors.black26,
-                                width: 2,
-                              ),
-                            ),
-                          ),
-                          padding: const EdgeInsets.only(right: 20),
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            e,
-                            style: TextStyle(
-                              fontSize: 22.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      )
-                      .toList(),
+    return DefaultTabController(
+      length: Data.instance.categories.length,
+      child: Scaffold(
+        key: scaffoldKey,
+        drawer: const ProfileDrawer(),
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                backgroundColor: Colors.white,
+                automaticallyImplyLeading: false,
+                pinned: false,
+                floating: false,
+                snap: false,
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      Routes.instance.push(const NotificationsPage(), context);
+                    },
+                    icon: const Icon(
+                      Icons.notifications_outlined,
+                      size: 28,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      // Routes.instance.push(const ProfilePage(), context);
+                      scaffoldKey.currentState?.openDrawer();
+                    },
+                    icon: const Icon(
+                      Icons.account_circle_outlined,
+                      size: 28,
+                    ),
+                  ),
+                ],
+                title: Text(
+                  "યુગ  અભિયાન ટાઈમ્સ ",
+                  style: TextStyle(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                // leading: Image.asset("assets/images/logo.png"),
+              ),
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: _SliverPersistentHeaderDelegate(
+            
+                  child: CategoryList(
+                    categoriesList: Data.instance.categories,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            RecentNewsCard(
-              category: Data.instance.recentNewsCardData,
-            ),
-          ],
+              SliverList(
+                delegate: SliverChildListDelegate([
+                  const SizedBox(height: 20),
+                  RecentNewsCard(
+                    category: Data.instance.recentNewsCardData,
+                  ),
+                  const SizedBox(height: 20),
+                  NewsCard(
+                    newsData: Data.instance.recentNewsCardData1,
+                  ),
+                  const SizedBox(height: 20),
+                  NewsCard(
+                    newsData: Data.instance.recentNewsCardData2,
+                  ),
+                  const SizedBox(height: 20),
+                  NewsCard(
+                    newsData: Data.instance.recentNewsCardData3,
+                  ),
+                  const SizedBox(height: 20),
+                  NewsCard(
+                    newsData: Data.instance.recentNewsCardData4,
+                  ),
+                ]),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+class _SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final Widget child;
+
+  const _SliverPersistentHeaderDelegate({required this.child});
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return SizedBox.expand(child: child);
+  }
+
+  @override
+  double get maxExtent => 37;
+
+  @override
+  double get minExtent => 35;
+
+  @override
+  bool shouldRebuild(_SliverPersistentHeaderDelegate oldDelegate) => false;
 }

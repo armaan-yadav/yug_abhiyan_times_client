@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       designSize: const Size(448, 973),
       builder: (context, child) {
-        return const MaterialApp(
+        return MaterialApp(
           title: "Yug Abhiyan Times",
           debugShowCheckedModeBanner: false,
           home: HomePage(),
