@@ -3,9 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yug_abhiyan_times_client/core/routes.dart';
 import 'package:yug_abhiyan_times_client/data/data.dart';
 import 'package:yug_abhiyan_times_client/screens/home_page/widgets/category_list.dart';
-import 'package:yug_abhiyan_times_client/screens/home_page/widgets/profile_drawer.dart';
+import 'package:yug_abhiyan_times_client/screens/profile_drawer/profile_drawer.dart';
 import 'package:yug_abhiyan_times_client/screens/notifications_page/notifications_page.dart';
-import 'package:yug_abhiyan_times_client/screens/profile_page/profile_page.dart';
 import 'package:yug_abhiyan_times_client/widgets/news_card.dart';
 import 'package:yug_abhiyan_times_client/widgets/recent_news_card.dart';
 
@@ -71,7 +70,7 @@ class HomePage extends StatelessWidget {
                 delegate: SliverChildListDelegate([
                   SizedBox(height: 20.w),
                   RecentNewsCard(
-                    category: Data.instance.recentNewsCardData,
+                    newsData: Data.instance.recentNewsCardData,
                   ),
                   SizedBox(height: 20.w),
                   NewsCard(

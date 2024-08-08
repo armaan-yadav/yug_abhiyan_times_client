@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yug_abhiyan_times_client/core/routes.dart';
-import 'package:yug_abhiyan_times_client/screens/news_description/news_description.dart';
+import 'package:yug_abhiyan_times_client/screens/news_description_page/news_description.dart';
 import 'package:yug_abhiyan_times_client/widgets/card_util_bar.dart';
 
 class NewsCard extends StatelessWidget {
@@ -21,11 +21,11 @@ class NewsCard extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.symmetric(
-          vertical: 13.w,
+          // vertical: .w,
           horizontal: 10.h,
         ),
         constraints: BoxConstraints(
-          minHeight: 250.w,
+          minHeight: 200.w,
           maxHeight: 600.w,
         ),
         width: double.infinity,
@@ -103,7 +103,9 @@ class NewsCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
+
+              //! card util bottom
               CardUtilBottom(
                 categoryName: category,
                 categoryId: "",

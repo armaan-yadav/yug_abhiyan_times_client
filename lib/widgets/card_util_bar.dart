@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yug_abhiyan_times_client/core/copy_to_clipboard.dart';
 import 'package:yug_abhiyan_times_client/core/extension.dart';
 
 class CardUtilBottom extends StatefulWidget {
@@ -21,16 +22,6 @@ class CardUtilBottom extends StatefulWidget {
 class _CardUtilBottomState extends State<CardUtilBottom> {
   bool isBookmarked = false;
 
-  void _copyToClipboard(String text) {
-    Clipboard.setData(ClipboardData(text: text));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Copied to clipboard'),
-        duration: Durations.long1,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -46,12 +37,14 @@ class _CardUtilBottomState extends State<CardUtilBottom> {
           children: [
             IconButton(
               onPressed: () {
-                _copyToClipboard(
-                    "news with id ${widget.newsId} copied to clipboard");
+                copyToClipboard(
+                  text: "news with id ${widget.newsId} copied to clipboard",
+                  context: context,
+                );
               },
-              icon: const Icon(
+              icon:  Icon(
                 Icons.share,
-                size: 28,
+                size: 26.sp,
               ),
             ),
             SizedBox(
@@ -65,13 +58,13 @@ class _CardUtilBottomState extends State<CardUtilBottom> {
                 });
               },
               icon: isBookmarked
-                  ? const Icon(
+                  ? Icon(
                       Icons.bookmark,
-                      size: 28,
+                      size: 26.sp,
                     )
-                  : const Icon(
+                  : Icon(
                       Icons.bookmark_outline,
-                      size: 28,
+                      size: 26.sp,
                     ),
             ),
           ],

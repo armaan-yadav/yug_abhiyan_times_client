@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yug_abhiyan_times_client/core/copy_to_clipboard.dart';
 
 class NewsImage extends StatelessWidget {
-  const NewsImage({super.key, required this.imageUrl});
+  const NewsImage({super.key, required this.imageUrl, required this.newsId});
   final String imageUrl;
+  final String newsId;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,10 @@ class NewsImage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    copyToClipboard(
+                        text: "News with id $newsId copied", context: context);
+                  },
                   icon: const Icon(
                     Icons.share,
                     size: 20,

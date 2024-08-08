@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:yug_abhiyan_times_client/screens/news_description/widgets/font_size_container.dart';
-import 'package:yug_abhiyan_times_client/screens/news_description/widgets/news_image.dart';
-import 'package:yug_abhiyan_times_client/screens/news_description/widgets/news_title.dart';
+import 'package:yug_abhiyan_times_client/core/copy_to_clipboard.dart';
+import 'package:yug_abhiyan_times_client/screens/news_description_page/widgets/font_size_container.dart';
+import 'package:yug_abhiyan_times_client/screens/news_description_page/widgets/news_image.dart';
+import 'package:yug_abhiyan_times_client/screens/news_description_page/widgets/news_title.dart';
 
 class NewsDescription extends StatefulWidget {
   const NewsDescription({
@@ -17,7 +18,7 @@ class NewsDescription extends StatefulWidget {
 }
 
 class _NewsDescriptionState extends State<NewsDescription> {
-  bool isBookmarked = true;
+  bool isBookmarked = false;
   bool showFontSizeMenu = false;
 
   double _fontScale = 1.0;
@@ -41,7 +42,7 @@ class _NewsDescriptionState extends State<NewsDescription> {
     final String imageUrl = widget.newsData["imageUrl"];
     final String category = widget.newsData["categoryName"];
     final String description = widget.newsData["description"];
-    final String id = widget.newsData["id"];
+    final String newsId = widget.newsData["id"];
 
     return Scaffold(
       appBar: PreferredSize(
@@ -76,7 +77,10 @@ class _NewsDescriptionState extends State<NewsDescription> {
                       ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  copyToClipboard(
+                      text: "News with id $newsId copied", context: context);
+                },
                 icon: Icon(
                   Icons.share,
                   size: 28.sp,
@@ -123,7 +127,10 @@ class _NewsDescriptionState extends State<NewsDescription> {
                   ),
 
                   //!image
-                  NewsImage(imageUrl: imageUrl),
+                  NewsImage(
+                    imageUrl: imageUrl,
+                    newsId: newsId,
+                  ),
 
                   //!  news description
                   Text(
@@ -137,6 +144,8 @@ class _NewsDescriptionState extends State<NewsDescription> {
           if (showFontSizeMenu)
             FontSizeContainer(
               changeFontScale: changeFontScale,
+              toggleFontSizeMenu: _toggleFontSizeMenu,
+              newsScreenContext: context,
             ),
         ],
       ),
