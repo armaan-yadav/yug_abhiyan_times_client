@@ -18,23 +18,6 @@ class _TtsState extends State<Tts> {
   void initTts() async {
     FlutterTts flutterTts = FlutterTts();
 
-    flutterTts.getVoices.then(
-      (value) {
-        try {
-          List<Map> voices = List<Map>.from(value);
-
-          print(
-            voices
-                .where(
-                  (element) => element["name"].toString().contains("gu-IN"),
-                )
-                .toList(),
-          );
-        } catch (e) {
-          print(e);
-        }
-      },
-    );
     // await flutterTts.setLanguage("gu-IN");
     // await flutterTts.setSpeechRate(0.5);
     // await flutterTts.setPitch(1.0);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:yug_abhiyan_times_client/core/copy_to_clipboard.dart';
 import 'package:yug_abhiyan_times_client/screens/news_description_page/widgets/font_size_container.dart';
 import 'package:yug_abhiyan_times_client/screens/news_description_page/widgets/news_image.dart';
@@ -20,8 +21,10 @@ class NewsDescription extends StatefulWidget {
 class _NewsDescriptionState extends State<NewsDescription> {
   bool isBookmarked = false;
   bool showFontSizeMenu = false;
-
   double _fontScale = 1.0;
+  bool _showStopSpeechButton = false;
+
+  int? _currentWordStart, _currentWordEnd;
 
   void changeFontScale(double scale) {
     setState(() {
@@ -33,6 +36,50 @@ class _NewsDescriptionState extends State<NewsDescription> {
     setState(() {
       showFontSizeMenu = !showFontSizeMenu;
     });
+  }
+
+  void _toggleShowStopSpeechButton() {
+    setState(() {
+      _showStopSpeechButton = !_showStopSpeechButton;
+    });
+  }
+
+  void startTextToSpeech(String textInput) async {
+    FlutterTts flutterTts = FlutterTts();
+    _toggleShowStopSpeechButton();
+    await flutterTts.setLanguage("gu-IN");
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setPitch(1.0);
+
+    await flutterTts.speak(textInput);
+
+    flutterTts.setProgressHandler(
+      (text, start, end, word) {
+        setState(() {
+          _currentWordEnd = end;
+          _currentWordStart = start;
+        });
+      },
+    );
+
+    flutterTts.setCompletionHandler(
+      () {
+        _toggleShowStopSpeechButton();
+      },
+    );
+  }
+
+  void stopTextToSpeech() async {
+    FlutterTts flutterTts = FlutterTts();
+
+    flutterTts.stop();
+    _toggleShowStopSpeechButton();
+  }
+
+  @override
+  void dispose() {
+    stopTextToSpeech();
+    super.dispose();
   }
 
   @override
@@ -132,11 +179,46 @@ class _NewsDescriptionState extends State<NewsDescription> {
                     newsId: newsId,
                   ),
 
-                  //!  news description
-                  Text(
-                    description,
-                    style: TextStyle(fontSize: 22.sp * _fontScale),
-                  ),
+                  // //!  news description
+                  _showStopSpeechButton
+                      ? RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text:
+                                    description.substring(0, _currentWordStart),
+                                style: TextStyle(
+                                  fontSize: 22.sp * _fontScale,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              if (_currentWordStart != null)
+                                TextSpan(
+                                  text: description.substring(
+                                    _currentWordStart!,
+                                    _currentWordEnd,
+                                  ),
+                                  style: TextStyle(
+                                    fontSize: 22.sp * _fontScale,
+                                    color: Colors.black,
+                                    backgroundColor: Colors.yellowAccent,
+                                  ),
+                                ),
+                              if (_currentWordEnd != null)
+                                TextSpan(
+                                  text: description.substring(_currentWordEnd!),
+                                  style: TextStyle(
+                                    fontSize: 22.sp * _fontScale,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        )
+                      : Text(
+                          description,
+                          style: TextStyle(fontSize: 22.sp * _fontScale),
+                        ),
                 ],
               ),
             ),
@@ -147,6 +229,57 @@ class _NewsDescriptionState extends State<NewsDescription> {
               toggleFontSizeMenu: _toggleFontSizeMenu,
               newsScreenContext: context,
             ),
+          Positioned(
+            bottom: 10,
+            right: 10,
+            child: GestureDetector(
+              onTap: () {
+                startTextToSpeech(description);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(220, 0, 0, 0),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(50),
+                  ),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.record_voice_over,
+                    color: Colors.white,
+                    size: 28.sp,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          if (_showStopSpeechButton)
+            Positioned(
+              bottom: 10,
+              right: 60,
+              child: GestureDetector(
+                onTap: () {
+                  stopTextToSpeech();
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(220, 0, 0, 0),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(50),
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 28.sp,
+                    ),
+                  ),
+                ),
+              ),
+            )
         ],
       ),
     );

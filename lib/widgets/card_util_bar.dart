@@ -35,16 +35,32 @@ class _CardUtilBottomState extends State<CardUtilBottom> {
         ),
         Row(
           children: [
-            IconButton(
-              onPressed: () {
+            GestureDetector(
+              onTap: () {
                 copyToClipboard(
                   text: "news with id ${widget.newsId} copied to clipboard",
                   context: context,
                 );
               },
-              icon:  Icon(
-                Icons.share,
-                size: 26.sp,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.share,
+                    size: 26.sp,
+                    color: Colors.black.withOpacity(.4),
+                  ),
+                  SizedBox(
+                    width: 3.h,
+                  ),
+                  Text(
+                    "સેવ ",
+                    style: TextStyle(
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black.withOpacity(.4),
+                    ),
+                  )
+                ],
               ),
             ),
             SizedBox(
@@ -58,13 +74,45 @@ class _CardUtilBottomState extends State<CardUtilBottom> {
                 });
               },
               icon: isBookmarked
-                  ? Icon(
-                      Icons.bookmark,
-                      size: 26.sp,
+                  ? Row(
+                      children: [
+                        Icon(
+                          Icons.bookmark,
+                          size: 26.sp,
+                          color: Colors.black.withOpacity(.4),
+                        ),
+                        SizedBox(
+                          width: 3.h,
+                        ),
+                        Text(
+                          "શેર",
+                          style: TextStyle(
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black.withOpacity(.4),
+                          ),
+                        )
+                      ],
                     )
-                  : Icon(
-                      Icons.bookmark_outline,
-                      size: 26.sp,
+                  : Row(
+                      children: [
+                        Icon(
+                          Icons.bookmark_outline,
+                          size: 26.sp,
+                          color: Colors.black.withOpacity(.4),
+                        ),
+                        SizedBox(
+                          width: 3.h,
+                        ),
+                        Text(
+                          "શેર",
+                          style: TextStyle(
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black.withOpacity(.4),
+                          ),
+                        )
+                      ],
                     ),
             ),
           ],
