@@ -54,8 +54,8 @@ class _CardUtilBottomState extends State<CardUtilBottom> {
                 size: 28,
               ),
             ),
-            const SizedBox(
-              width: 10,
+            SizedBox(
+              width: 10.h,
             ),
             IconButton(
               onPressed: () {

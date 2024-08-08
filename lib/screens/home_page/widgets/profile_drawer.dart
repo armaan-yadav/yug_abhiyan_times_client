@@ -8,7 +8,6 @@ class ProfileDrawer extends StatelessWidget {
     return SafeArea(
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 70 / 100,
-        // width: 200,
         child: Drawer(
           child: Container(
             color: Colors.white,

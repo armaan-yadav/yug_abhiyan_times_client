@@ -21,12 +21,10 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         key: scaffoldKey,
         drawer: const ProfileDrawer(),
-        backgroundColor: Colors.white,
         body: SafeArea(
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
-                backgroundColor: Colors.white,
                 automaticallyImplyLeading: false,
                 pinned: false,
                 floating: false,
@@ -64,7 +62,6 @@ class HomePage extends StatelessWidget {
               SliverPersistentHeader(
                 pinned: true,
                 delegate: _SliverPersistentHeaderDelegate(
-            
                   child: CategoryList(
                     categoriesList: Data.instance.categories,
                   ),
@@ -72,23 +69,23 @@ class HomePage extends StatelessWidget {
               ),
               SliverList(
                 delegate: SliverChildListDelegate([
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.w),
                   RecentNewsCard(
                     category: Data.instance.recentNewsCardData,
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.w),
                   NewsCard(
                     newsData: Data.instance.recentNewsCardData1,
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.w),
                   NewsCard(
                     newsData: Data.instance.recentNewsCardData2,
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.w),
                   NewsCard(
                     newsData: Data.instance.recentNewsCardData3,
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.w),
                   NewsCard(
                     newsData: Data.instance.recentNewsCardData4,
                   ),

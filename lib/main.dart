@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yug_abhiyan_times_client/core/theme.dart';
 import 'package:yug_abhiyan_times_client/screens/home_page/home_page.dart';
 
 void main() {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           title: "Yug Abhiyan Times",
+          theme: themeData,
           debugShowCheckedModeBanner: false,
           home: HomePage(),
         );

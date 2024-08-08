@@ -62,8 +62,8 @@ class _RecentNewsCardState extends State<RecentNewsCard> {
               ],
             ),
           ),
-          const SizedBox(
-            height: 15,
+          SizedBox(
+            height: 15.w,
           ),
           SizedBox(
             width: double.infinity,
