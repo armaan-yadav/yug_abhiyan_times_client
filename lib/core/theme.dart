@@ -6,3 +6,13 @@ final ThemeData themeData = ThemeData(
   ),
   scaffoldBackgroundColor: Colors.white,
 );
+
+final BoxDecoration bottomShadowEffect =
+    BoxDecoration(color: Colors.white, boxShadow: [
+  BoxShadow(
+    color: Colors.black.withOpacity(.1),
+    spreadRadius: 1,
+    blurRadius: 6,
+    offset: const Offset(0, 2),
+  ),
+]);

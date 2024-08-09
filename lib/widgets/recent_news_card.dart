@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yug_abhiyan_times_client/core/routes.dart';
+import 'package:yug_abhiyan_times_client/models/news_model.dart';
 import 'package:yug_abhiyan_times_client/screens/news_description_page/news_description.dart';
 import 'package:yug_abhiyan_times_client/widgets/card_util_bar.dart';
 
@@ -10,7 +11,7 @@ class RecentNewsCard extends StatefulWidget {
     required this.newsData,
   });
 
-  final Map<String, dynamic> newsData;
+  final NewsModel newsData;
 
   @override
   State<RecentNewsCard> createState() => _RecentNewsCardState();
@@ -19,10 +20,11 @@ class RecentNewsCard extends StatefulWidget {
 class _RecentNewsCardState extends State<RecentNewsCard> {
   @override
   Widget build(BuildContext context) {
-    final String title = widget.newsData["title"];
-    final String subTitle = widget.newsData["subTitle"];
-    final String imageUrl = widget.newsData["imageUrl"];
-    final String category = widget.newsData["categoryName"];
+    final String title = widget.newsData.title;
+    final String subTitle = widget.newsData.subTitle;
+    final String imageUrl = widget.newsData.imageUrl;
+    final String category = widget.newsData.categoryName;
+    final String id = widget.newsData.id;
     return GestureDetector(
       onTap: () {
         Routes.instance
@@ -98,7 +100,7 @@ class _RecentNewsCardState extends State<RecentNewsCard> {
             CardUtilBottom(
               categoryName: category,
               categoryId: "",
-              newsId: widget.newsData["id"],
+              newsId: id,
             )
           ],
         ),

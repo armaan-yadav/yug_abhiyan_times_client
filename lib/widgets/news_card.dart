@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yug_abhiyan_times_client/core/routes.dart';
+import 'package:yug_abhiyan_times_client/models/news_model.dart';
 import 'package:yug_abhiyan_times_client/screens/news_description_page/news_description.dart';
 import 'package:yug_abhiyan_times_client/widgets/card_util_bar.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({super.key, required this.newsData});
 
-  final Map<String, dynamic> newsData;
+  final NewsModel newsData;
   @override
   Widget build(BuildContext context) {
-    final String title = newsData["title"];
-    final String subTitle = newsData["subTitle"];
-    final String imageUrl = newsData["imageUrl"];
-    final String category = newsData["categoryName"];
+    final String title = newsData.title;
+    final String subTitle = newsData.subTitle;
+    final String imageUrl = newsData.imageUrl;
+    final String category = newsData.categoryName;
+    final String id = newsData.id;
 
     return GestureDetector(
       onTap: () {
@@ -109,7 +111,7 @@ class NewsCard extends StatelessWidget {
               CardUtilBottom(
                 categoryName: category,
                 categoryId: "",
-                newsId: newsData["id"],
+                newsId: id,
               ),
             ],
           ),

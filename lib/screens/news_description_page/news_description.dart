@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:yug_abhiyan_times_client/core/copy_to_clipboard.dart';
+import 'package:yug_abhiyan_times_client/core/theme.dart';
+import 'package:yug_abhiyan_times_client/models/news_model.dart';
 import 'package:yug_abhiyan_times_client/screens/news_description_page/widgets/font_size_container.dart';
 import 'package:yug_abhiyan_times_client/screens/news_description_page/widgets/news_image.dart';
 import 'package:yug_abhiyan_times_client/screens/news_description_page/widgets/news_title.dart';
@@ -12,7 +14,7 @@ class NewsDescription extends StatefulWidget {
     required this.newsData,
   });
 
-  final Map<String, dynamic> newsData;
+  final NewsModel newsData;
 
   @override
   State<NewsDescription> createState() => _NewsDescriptionState();
@@ -84,27 +86,20 @@ class _NewsDescriptionState extends State<NewsDescription> {
 
   @override
   Widget build(BuildContext context) {
-    final String title = widget.newsData["title"];
-    final String subTitle = widget.newsData["subTitle"];
-    final String imageUrl = widget.newsData["imageUrl"];
-    final String category = widget.newsData["categoryName"];
-    final String description = widget.newsData["description"];
-    final String newsId = widget.newsData["id"];
+    final String title = widget.newsData.title;
+    final String subTitle = widget.newsData.subTitle;
+    final String imageUrl = widget.newsData.imageUrl;
+    final String category = widget.newsData.categoryName;
+    final String id = widget.newsData.id;
+    final String description = widget.newsData.description;
 
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Container(
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(.1),
-              spreadRadius: 1,
-              blurRadius: 6,
-              offset: const Offset(0, 2),
-            ),
-          ]),
+          decoration: bottomShadowEffect,
           child: AppBar(
-            title: Text(widget.newsData["categoryName"]),
+            title: Text(category),
             actions: [
               IconButton(
                 onPressed: () {
@@ -126,7 +121,7 @@ class _NewsDescriptionState extends State<NewsDescription> {
               IconButton(
                 onPressed: () {
                   copyToClipboard(
-                      text: "News with id $newsId copied", context: context);
+                      text: "News with id $id copied", context: context);
                 },
                 icon: Icon(
                   Icons.share,
@@ -176,7 +171,7 @@ class _NewsDescriptionState extends State<NewsDescription> {
                   //!image
                   NewsImage(
                     imageUrl: imageUrl,
-                    newsId: newsId,
+                    newsId: id,
                   ),
 
                   // //!  news description

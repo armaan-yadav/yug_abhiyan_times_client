@@ -70,23 +70,23 @@ class HomePage extends StatelessWidget {
                 delegate: SliverChildListDelegate([
                   SizedBox(height: 20.w),
                   RecentNewsCard(
-                    newsData: Data.instance.recentNewsCardData,
+                    newsData: Data.instance.newsData,
                   ),
                   SizedBox(height: 20.w),
                   NewsCard(
-                    newsData: Data.instance.recentNewsCardData1,
+                    newsData: Data.instance.newsData,
                   ),
                   SizedBox(height: 20.w),
                   NewsCard(
-                    newsData: Data.instance.recentNewsCardData2,
+                    newsData: Data.instance.newsData,
                   ),
                   SizedBox(height: 20.w),
                   NewsCard(
-                    newsData: Data.instance.recentNewsCardData3,
+                    newsData: Data.instance.newsData,
                   ),
                   SizedBox(height: 20.w),
                   NewsCard(
-                    newsData: Data.instance.recentNewsCardData4,
+                    newsData: Data.instance.newsData,
                   ),
                 ]),
               ),
